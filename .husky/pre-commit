@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+bunx lint-staged --allow-empty
+
+# Prevent commit if lint-staged made changes
+git diff --exit-code || (echo "❌ lint-staged made changes. Please review, stage, and commit again." && exit 1)
