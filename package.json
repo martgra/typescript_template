@@ -1,7 +1,9 @@
 {
-  "name": "multiplayer-game",
+  "name": "typescript-template",
   "version": "1.0.0",
+  "description": "A TypeScript project",
   "private": true,
+  "author": "Your Name <you@example.com>",
   "scripts": {
     "build": "tsc",
     "dev": "bun run --watch src/index.ts",
@@ -32,8 +34,8 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "husky": "^8.0.3",
-    "knip": "^5.33.3",
     "lint-staged": "^15.2.10",
+    "knip": "^5.33.3",
     "prettier": "^3.0.0",
     "typescript": "^5.2.2"
   }

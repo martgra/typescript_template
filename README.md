@@ -1,6 +1,6 @@
-# Multiplayer Game
+# typescript-template
 
-A TypeScript-based multiplayer game project with a complete development setup.
+A TypeScript project
 
 ## Quick Start
 
@@ -15,7 +15,7 @@ bun run dev
 bun run build
 
 # Run production build
-bun run start
+bun start
 ```
 
 ## Development Tools
@@ -46,10 +46,10 @@ Pre-commit hooks automatically run ESLint and Prettier on staged files:
 
 ```
 .
-├── src/              # Source code
-├── .devcontainer/    # Dev container configuration (optional)
+├── .devcontainer/    # Dev container configuration
 ├── .husky/           # Git hooks
 ├── .vscode/          # VSCode settings
+├── src/              # Source code
 └── dist/             # Build output
 ```
 
@@ -59,7 +59,7 @@ Pre-commit hooks automatically run ESLint and Prettier on staged files:
 - **`.eslintrc.json`** - Linting rules
 - **`.editorconfig`** - Editor configuration
 - **`knip.json`** - Unused code detection
-- **`tsconfig.json`** - TypeScript configuration
+- **`tsconfig.json`** - TypeScript configuration (strict mode enabled)
 
 ## Converting to Monorepo
 
@@ -69,7 +69,7 @@ If you want to organize your code as a monorepo with separate packages (e.g., se
 
 ```json
 {
-  "name": "multiplayer-game-monorepo",
+  "name": "typescript-template-monorepo",
   "workspaces": ["packages/*"],
   "scripts": {
     "build": "bun run --filter '*' build",
@@ -160,7 +160,7 @@ Each package gets its own `tsconfig.json`:
 }
 ```
 
-## Dev Container (Optional)
+## Dev Container
 
 This project includes a dev container configuration for consistent development environments:
 
