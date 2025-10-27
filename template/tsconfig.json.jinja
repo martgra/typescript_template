@@ -6,7 +6,7 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "composite": true,
+    "composite": true,{% if typescript_strict %}
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,7 +16,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true,{% else %}
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,{% endif %}
     "outDir": "./dist",
     "rootDir": "./src"
   },

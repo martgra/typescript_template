@@ -1,181 +1,97 @@
-# Multiplayer Game
+# Copier Template for TypeScript/Bun Projects
 
-A TypeScript-based multiplayer game project with a complete development setup.
+This repository contains a [Copier](https://copier.readthedocs.io/) template for scaffolding TypeScript projects with Bun, complete linting/formatting setup, and optional devcontainer support.
 
-## Quick Start
+## Using This Template
+
+### Prerequisites
 
 ```bash
-# Install dependencies
+# Install Copier (Python CLI tool)
+pip install copier
+# or
+pipx install copier
+```
+
+### Generate a New Project
+
+```bash
+# Using the template branch
+copier copy --vcs-ref=template gh:your-username/your-repo path/to/new-project
+
+# Or if you've cloned this repo locally
+copier copy path/to/this/repo/template path/to/new-project
+```
+
+Copier will ask you several questions to customize your project:
+
+- **Project name**: Name for your project (used in package.json)
+- **Description**: Short description of your project
+- **Author name**: Your name
+- **Author email**: Your email address
+- **Use Git**: Initialize git repository in new project
+- **Use devcontainer**: Include VSCode devcontainer setup
+- **Setup Husky**: Include git hooks for pre-commit linting
+- **TypeScript strict mode**: Enable all strict TypeScript checks
+- **Package manager**: Choose between bun, npm, yarn, or pnpm
+
+### What's Included
+
+The generated project includes:
+
+- **Bun Runtime**: Fast JavaScript/TypeScript runtime and package manager
+- **TypeScript**: Full TypeScript support with configurable strict mode
+- **ESLint**: Code linting with TypeScript support
+- **Prettier**: Code formatting with consistent style
+- **Import Sorting**: Automatic import organization via eslint-plugin-simple-import-sort
+- **Knip**: Unused code and dependency detection
+- **Husky** (optional): Git hooks for pre-commit checks
+- **lint-staged** (optional): Run linters only on staged files
+- **Devcontainer** (optional): Complete Docker-based development environment
+
+### Project Scripts
+
+After generation, the following scripts are available:
+
+```bash
+# Development
+bun run dev          # Run in development mode with watch
+bun run build        # Build for production
+bun start           # Run the built project
+
+# Code Quality
+bun run lint        # Check for linting issues
+bun run lint:fix    # Auto-fix linting issues
+bun run format      # Format code with Prettier
+bun run format:check # Check if code is formatted
+bun run knip        # Find unused code and dependencies
+```
+
+### Development Environment Options
+
+#### Without Devcontainer
+Just install Bun locally:
+```bash
+curl -fsSL https://bun.sh/install | bash
 bun install
-
-# Start development server
-bun run dev
-
-# Build for production
-bun run build
-
-# Run production build
-bun run start
 ```
 
-## Development Tools
+#### With Devcontainer
+Open the project in VSCode and use the "Reopen in Container" command. Everything is pre-configured.
 
-### Linting & Formatting
+## Branch Structure
 
-```bash
-# Run ESLint
-bun run lint
-bun run lint:fix
+- **main**: Working example project (this README documents the template)
+- **template**: Copier template with Jinja2-templated files
 
-# Run Prettier
-bun run format
-bun run format:check
+## Template Development
 
-# Find unused code/dependencies
-bun run knip
-```
+To modify the template:
 
-### Git Hooks
-
-Pre-commit hooks automatically run ESLint and Prettier on staged files:
-
-- Files are fixed but **not auto-staged**
-- Review changes, then stage and commit again
-
-## Project Structure
-
-```
-.
-├── src/              # Source code
-├── .devcontainer/    # Dev container configuration (optional)
-├── .husky/           # Git hooks
-├── .vscode/          # VSCode settings
-└── dist/             # Build output
-```
-
-## Configuration Files
-
-- **`.prettierrc`** - Code formatting rules
-- **`.eslintrc.json`** - Linting rules
-- **`.editorconfig`** - Editor configuration
-- **`knip.json`** - Unused code detection
-- **`tsconfig.json`** - TypeScript configuration
-
-## Converting to Monorepo
-
-If you want to organize your code as a monorepo with separate packages (e.g., server/client):
-
-### 1. Update `package.json`
-
-```json
-{
-  "name": "multiplayer-game-monorepo",
-  "workspaces": ["packages/*"],
-  "scripts": {
-    "build": "bun run --filter '*' build",
-    "dev": "bun run --filter '*' dev",
-    "lint": "bun run --filter '*' lint"
-  }
-}
-```
-
-### 2. Create Package Structure
-
-```bash
-mkdir -p packages/server packages/client
-
-# Move existing code or create new packages
-mv src packages/server/src
-```
-
-### 3. Create Package package.json Files
-
-**packages/server/package.json:**
-
-```json
-{
-  "name": "@your-game/server",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "bun run --watch src/index.ts"
-  }
-}
-```
-
-**packages/client/package.json:**
-
-```json
-{
-  "name": "@your-game/client",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "bun run --watch src/index.ts"
-  }
-}
-```
-
-### 4. Update `knip.json`
-
-```json
-{
-  "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "workspaces": {
-    ".": {
-      "entry": ["index.ts"],
-      "project": ["**/*.ts"]
-    },
-    "packages/*": {
-      "entry": ["src/index.ts"],
-      "project": ["src/**/*.ts"]
-    }
-  }
-}
-```
-
-### 5. Update `tsconfig.json`
-
-Create a root `tsconfig.json`:
-
-```json
-{
-  "files": [],
-  "references": [{ "path": "./packages/server" }, { "path": "./packages/client" }]
-}
-```
-
-Each package gets its own `tsconfig.json`:
-
-```json
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src"
-  },
-  "include": ["src"]
-}
-```
-
-## Dev Container (Optional)
-
-This project includes a dev container configuration for consistent development environments:
-
-```bash
-# Open in VS Code with Dev Containers extension
-code .
-# Then: Reopen in Container
-```
-
-Features:
-
-- Bun pre-installed
-- ZSH with Oh My Zsh
-- All extensions auto-installed
-- Persistent command history
+1. Switch to template branch: `git checkout template`
+2. Edit files in `template/` directory
+3. Modify `copier.yml` to add/change questions
+4. Test locally: `copier copy template /tmp/test-project`
 
 ## License
 

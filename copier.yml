@@ -1,0 +1,80 @@
+# Copier Template Configuration
+# Learn more: https://copier.readthedocs.io/
+
+_templates_suffix: .jinja
+_subdirectory: template
+_exclude:
+  - copier.yml
+  - .copier-answers.yml
+  - .git
+  - .gitignore.jinja
+  - "*.pyc"
+  - __pycache__
+
+# Template Questions
+project_name:
+  type: str
+  help: What is your project name?
+  default: my-project
+  validator: >-
+    {% if not (project_name | regex_search('^[a-z][a-z0-9-]*$')) %}
+    project_name must start with a letter and only contain lowercase letters, numbers, and hyphens
+    {% endif %}
+
+project_description:
+  type: str
+  help: Brief project description
+  default: A TypeScript project
+
+author_name:
+  type: str
+  help: Author name
+  default: Your Name
+
+author_email:
+  type: str
+  help: Author email
+  default: you@example.com
+
+use_git:
+  type: bool
+  help: Initialize git repository?
+  default: true
+
+use_devcontainer:
+  type: bool
+  help: Include dev container configuration?
+  default: true
+
+setup_husky:
+  type: bool
+  help: Set up git hooks with Husky?
+  default: true
+  when: "{{ use_git }}"
+
+typescript_strict:
+  type: bool
+  help: Use strict TypeScript configuration?
+  default: true
+
+include_examples:
+  type: bool
+  help: Include example code?
+  default: false
+
+package_manager:
+  type: str
+  help: Which package manager?
+  choices:
+    - bun
+    - npm
+    - yarn
+    - pnpm
+  default: bun
+
+_jinja_extensions:
+  - jinja2.ext.do
+
+_skip_if_exists:
+  - .git
+  - node_modules
