@@ -53,8 +53,6 @@ jobs:
 
       - name: Build template output
         run: make build
-          export PATH="/tmp/copier-venv/bin:$PATH"
-          make build
 
       - name: Get template commit SHA
         id: template_sha
