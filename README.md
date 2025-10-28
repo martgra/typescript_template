@@ -1,6 +1,30 @@
-# Multiplayer Game
+# typescript-template
 
-A TypeScript-based multiplayer game project with a complete development setup.
+> 🎯 Generated from [martgra/typescript_template](https://github.com/martgra/typescript_template)
+>
+> ```bash
+> # Generate your own project with Copier
+> uvx copier copy gh:martgra/typescript_template my-project
+> ```
+
+A TypeScript project
+
+[![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
+[![CI](https://github.com/Your Name/typescript-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/Your Name/typescript-template/actions/workflows/ci.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2%2B-blue)](https://www.typescriptlang.org/)
+[![Bun](https://img.shields.io/badge/bun-latest-black)](https://bun.sh)
+
+## ✨ Features
+
+- 🚀 **TypeScript** - Type-safe development with strict mode
+- 📦 **Bun** - Fast package management and runtime
+- 🎨 **ESLint & Prettier** - Code quality and formatting
+- 🔍 **Knip** - Detect unused code and dependencies
+- 🪝 **Husky** - Git hooks for quality enforcement
+- 🔐 **Secret Detection** - Prevent committing secrets
+- ⚙️ **GitHub Actions** - Automated CI/CD
+- 🐳 **Dev Container** - Consistent development environment
 
 ## Quick Start
 
@@ -8,17 +32,20 @@ A TypeScript-based multiplayer game project with a complete development setup.
 # Install dependencies
 bun install
 
-# Start development server
+# Set up git hooks
+bun run prepare
+
+# Start development with watch mode
 bun run dev
 
 # Build for production
 bun run build
 
 # Run production build
-bun run start
+bun start
 ```
 
-## Development Tools
+## 🛠️ Development Tools
 
 ### Linting & Formatting
 
@@ -37,146 +64,45 @@ bun run knip
 
 ### Git Hooks
 
-Pre-commit hooks automatically run ESLint and Prettier on staged files:
+Pre-commit hooks automatically:
 
-- Files are fixed but **not auto-staged**
-- Review changes, then stage and commit again
+- Run ESLint and auto-fix issues
+- Format code with Prettier
+- Scan for secrets with secretlint
 
-## Project Structure
+**Note:** Changes are **not auto-staged**. Review, stage, and commit again if hooks make changes.
+
+## 📁 Project Structure
 
 ```
 .
-├── src/              # Source code
-├── .devcontainer/    # Dev container configuration (optional)
-├── .husky/           # Git hooks
-├── .vscode/          # VSCode settings
-└── dist/             # Build output
+├── .devcontainer/       # Dev container configuration
+├── .github/
+│   └── workflows/       # GitHub Actions CI/CD
+├── .husky/              # Git hooks
+├── .vscode/             # VSCode settings
+├── src/
+│   └── index.ts         # Entry point
+├── dist/                # Build output
+├── CONTRIBUTING.md      # Contribution guidelines
+├── CHANGELOG.md         # Version history
+├── LICENSE              # MIT License file
+└── package.json
 ```
 
-## Configuration Files
+## ⚙️ Configuration Files
 
 - **`.prettierrc`** - Code formatting rules
-- **`.eslintrc.json`** - Linting rules
-- **`.editorconfig`** - Editor configuration
-- **`knip.json`** - Unused code detection
-- **`tsconfig.json`** - TypeScript configuration
+- **`.eslintrc.json`** - Linting rules with TypeScript support
+- **`.editorconfig`** - Editor configuration for consistency
+- **`knip.json`** - Unused code and dependency detection
+- **`.secretlintrc.json`** - Secret detection rules
+- **`tsconfig.json`** - TypeScript compiler options (strict mode)
 
-## Converting to Monorepo
+## 🤝 Contributing
 
-If you want to organize your code as a monorepo with separate packages (e.g., server/client):
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-### 1. Update `package.json`
+## 📝 License
 
-```json
-{
-  "name": "multiplayer-game-monorepo",
-  "workspaces": ["packages/*"],
-  "scripts": {
-    "build": "bun run --filter '*' build",
-    "dev": "bun run --filter '*' dev",
-    "lint": "bun run --filter '*' lint"
-  }
-}
-```
-
-### 2. Create Package Structure
-
-```bash
-mkdir -p packages/server packages/client
-
-# Move existing code or create new packages
-mv src packages/server/src
-```
-
-### 3. Create Package package.json Files
-
-**packages/server/package.json:**
-
-```json
-{
-  "name": "@your-game/server",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "bun run --watch src/index.ts"
-  }
-}
-```
-
-**packages/client/package.json:**
-
-```json
-{
-  "name": "@your-game/client",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "bun run --watch src/index.ts"
-  }
-}
-```
-
-### 4. Update `knip.json`
-
-```json
-{
-  "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "workspaces": {
-    ".": {
-      "entry": ["index.ts"],
-      "project": ["**/*.ts"]
-    },
-    "packages/*": {
-      "entry": ["src/index.ts"],
-      "project": ["src/**/*.ts"]
-    }
-  }
-}
-```
-
-### 5. Update `tsconfig.json`
-
-Create a root `tsconfig.json`:
-
-```json
-{
-  "files": [],
-  "references": [{ "path": "./packages/server" }, { "path": "./packages/client" }]
-}
-```
-
-Each package gets its own `tsconfig.json`:
-
-```json
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src"
-  },
-  "include": ["src"]
-}
-```
-
-## Dev Container (Optional)
-
-This project includes a dev container configuration for consistent development environments:
-
-```bash
-# Open in VS Code with Dev Containers extension
-code .
-# Then: Reopen in Container
-```
-
-Features:
-
-- Bun pre-installed
-- ZSH with Oh My Zsh
-- All extensions auto-installed
-- Persistent command history
-
-## License
-
-MIT
+MIT - See [LICENSE](./LICENSE) file for details.

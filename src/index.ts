@@ -1,5 +1,10 @@
-// eslint-disable-next-line no-console
-console.log("Hello from your multiplayer game!");
+/**
+ * Main entry point for the application
+ */
+function main(): void {
+  console.log("Hello, World!");
+}
 
-// Your game logic goes here
+main();
+
 export {};
