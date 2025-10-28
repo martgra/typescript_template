@@ -11,5 +11,5 @@ build/
 *.tsbuildinfo
 
 # Copier generated files (when testing locally)
-.copier-answers.yml
+.copier-answers.yaml
 build_output/

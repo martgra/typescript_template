@@ -62,7 +62,7 @@ template/                           # Template files (what gets copied)
 ├── .github/
 │   ├── workflows/
 │   │   └── ci.yaml.jinja          # CI workflow (optional)
-│   └── dependabot.yml             # Dependency updates
+│   └── dependabot.yaml            # Dependency updates
 ├── .vscode/                        # VSCode settings (optional)
 ├── .devcontainer/                  # Docker devcontainer (optional)
 ├── .husky/                         # Git hooks
@@ -101,11 +101,13 @@ This will prompt you for any new questions and merge in template updates.
 ## 🎯 What's Included in Generated Projects
 
 ### Core Files
+
 - ✅ Simple TypeScript Hello World (`src/index.ts`)
 - ✅ Build configuration for Bun
 - ✅ MIT License
 
 ### Code Quality
+
 - ✅ ESLint with TypeScript support
 - ✅ Prettier for consistent formatting
 - ✅ Import sorting (simple-import-sort)
@@ -113,15 +115,18 @@ This will prompt you for any new questions and merge in template updates.
 - ✅ Secretlint for credential scanning
 
 ### Git Hooks (Husky)
+
 - ✅ Pre-commit: lint-staged, secret scanning, formatting
 - ✅ Auto-fix on commit (changes not auto-staged for review)
 
 ### Optional Features
+
 - ✅ GitHub Actions CI/CD workflow
 - ✅ VSCode settings and recommended extensions
 - ✅ Devcontainer for Docker-based development
 
 ### Documentation
+
 - ✅ Comprehensive README with badges
 - ✅ Contributing guidelines
 - ✅ Changelog template

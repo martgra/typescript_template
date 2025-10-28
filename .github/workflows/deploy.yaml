@@ -92,7 +92,7 @@ jobs:
           # Copy build output
           cp -r ../${{ github.event.repository.name }}/build_output/. .
           # Remove copier answers file (shouldn't be in generated project)
-          rm -f .copier-answers.yml
+          rm -f .copier-answers.yaml
           # Remove workflow files (can't be modified by GITHUB_TOKEN)
           rm -rf .github/workflows
 
