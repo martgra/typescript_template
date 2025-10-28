@@ -16,7 +16,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      workflows: write
 
     steps:
       - name: Checkout template branch
@@ -101,6 +100,8 @@ jobs:
           cp -r ../${{ github.event.repository.name }}/build_output/. .
           # Remove copier answers file (shouldn't be in generated project)
           rm -f .copier-answers.yml
+          # Remove workflow files (can't be modified by GITHUB_TOKEN)
+          rm -rf .github/workflows
 
       - name: Check for changes
         id: check_changes
