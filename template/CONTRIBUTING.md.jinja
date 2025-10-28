@@ -24,12 +24,15 @@ Thank you for considering contributing to {{ project_name }}! This document prov
    ```bash
    bun install
    ```
-{% if use_devcontainer %}
+
+   {% if use_devcontainer %}
+
 3. **Optional: Use devcontainer**
 
    Open the project in VS Code and click "Reopen in Container" when prompted.
-{% endif %}
-3. **Create a new branch**
+   {% endif %}
+
+4. **Create a new branch**
 
    ```bash
    git checkout -b feature/your-feature-name
@@ -94,6 +97,7 @@ src/
 ### Git Hooks
 
 Pre-commit hooks automatically run:
+
 - ESLint (auto-fix)
 - Prettier (auto-format)
 - Secret detection
@@ -105,6 +109,7 @@ Pre-commit hooks automatically run:
 1. **Update documentation** - Update README.md if you change functionality
 2. **Run all checks** - Ensure linting, formatting, and build pass
 3. **Write clear commit messages** - Follow [Conventional Commits](https://www.conventionalcommits.org/)
+
    ```
    feat: add new feature
    fix: resolve bug in X
@@ -133,6 +138,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -141,6 +147,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 - `chore`: Maintenance tasks
 
 **Example:**
+
 ```
 feat(auth): add JWT authentication
 
@@ -155,6 +162,7 @@ Closes #123
 ### Bug Reports
 
 Include:
+
 - Clear description of the issue
 - Steps to reproduce
 - Expected vs actual behavior
@@ -164,6 +172,7 @@ Include:
 ### Feature Requests
 
 Include:
+
 - Clear description of the feature
 - Use case and motivation
 - Proposed implementation (optional)
@@ -171,6 +180,7 @@ Include:
 ## Code Review
 
 All submissions require review. We aim to:
+
 - Provide feedback within 2-3 business days
 - Be constructive and respectful
 - Focus on code quality, not personal preferences

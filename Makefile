@@ -29,6 +29,8 @@ build:
 	@$(COPIER) copy --vcs-ref=HEAD . build_output --defaults --force --trust --data skip_git_init=true 2>&1 | grep -v "FutureWarning\|DirtyLocalWarning" || true
 	@echo "📦 Installing dependencies..."
 	@cd build_output && bun install --no-cache >/dev/null
+	@echo "🎨 Formatting generated files..."
+	@cd build_output && bun run format >/dev/null
 	@echo "🚀 Running linter and formatter checks..."
 	@cd build_output && bun run lint && bun run format:check
 	@echo "✅ Template generated and validated successfully!"
