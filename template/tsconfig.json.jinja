@@ -6,7 +6,11 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "composite": true,{% if typescript_strict %}
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },{% if typescript_strict %}
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,8 +25,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,{% endif %}
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "outDir": "./dist"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "build"]

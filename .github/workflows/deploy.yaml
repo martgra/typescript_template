@@ -1,0 +1,140 @@
+name: Build and Deploy Template
+
+on:
+  push:
+    branches:
+      - template
+
+# REQUIRED REPOSITORY SETTING:
+# Go to: Settings > Actions > General > Workflow permissions
+# Enable: "Allow GitHub Actions to create and approve pull requests"
+# This allows the GITHUB_TOKEN to have pull_requests: write permission
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout template branch
+        uses: actions/checkout@v4
+        with:
+          ref: template
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Check markdown links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --no-progress --exclude 'file://' --exclude 'host\.docker\.internal' '**/*.md' '**/*.md.jinja'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Copier
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip python3-venv
+          python3 -m venv /tmp/copier-venv
+          /tmp/copier-venv/bin/pip install copier
+
+      - name: Run template tests
+        run: |
+          export PATH="/tmp/copier-venv/bin:$PATH"
+          make test
+
+      - name: Build template output
+        run: |
+          export PATH="/tmp/copier-venv/bin:$PATH"
+          make build
+
+      - name: Get template commit SHA
+        id: template_sha
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Prepare PR body
+        id: pr_body
+        run: |
+          cat << 'EOF' > /tmp/pr_body.md
+          ## 🤖 Automated Template Build
+
+          This PR contains the rendered template from the latest changes on the `template` branch.
+
+          **Source commit:** `${{ steps.template_sha.outputs.sha }}`
+          **Build timestamp:** ${{ github.event.head_commit.timestamp }}
+
+          ### ✅ Validation
+          - Link checking passed
+          - Template tests passed
+          - Lint and format checks validated
+          EOF
+          echo "body_file=/tmp/pr_body.md" >> $GITHUB_OUTPUT
+
+      - name: Clone repository for main branch
+        run: |
+          cd ..
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main-repo
+          cd main-repo
+          # Try to checkout main, or create orphan if it doesn't exist
+          git checkout main 2>/dev/null || git checkout --orphan main
+
+      - name: Apply build output to main branch
+        run: |
+          cd ../main-repo
+          # Remove all files except .git
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          # Copy build output
+          cp -r ../${{ github.event.repository.name }}/build_output/. .
+          # Remove copier answers file (shouldn't be in generated project)
+          rm -f .copier-answers.yml
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          cd ../main-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Ensure main branch exists
+          if ! git ls-remote --heads origin main | grep -q main; then
+            git checkout --orphan main
+            git add -A
+            git commit -m "Initial commit from template@${{ steps.template_sha.outputs.sha }}"
+            git push origin main
+          else
+            git checkout main 2>/dev/null || git checkout --orphan main
+          fi
+
+          git add -A
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: ../main-repo
+          branch: template-build
+          base: main
+          title: "Build from template@${{ steps.template_sha.outputs.sha }}"
+          body-path: ${{ steps.pr_body.outputs.body_file }}
+          commit-message: "Build from template@${{ steps.template_sha.outputs.sha }}"
+          committer: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

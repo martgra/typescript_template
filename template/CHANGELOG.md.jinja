@@ -1,0 +1,35 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+- Initial project setup
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.0.0] - {{ now().strftime('%Y-%m-%d') }}
+
+### Added
+- Project scaffolding with TypeScript{{ ' strict mode' if typescript_strict else '' }}
+- ESLint and Prettier configuration
+- Bun as package manager and runtime
+- Husky pre-commit hooks with lint-staged
+- Secret detection with secretlint{% if use_github_actions %}
+- GitHub Actions CI/CD workflows{% endif %}{% if use_devcontainer %}
+- VSCode devcontainer configuration{% endif %}
+
+[unreleased]: https://github.com/{{ author_name }}/{{ project_name }}/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/{{ author_name }}/{{ project_name }}/releases/tag/v1.0.0

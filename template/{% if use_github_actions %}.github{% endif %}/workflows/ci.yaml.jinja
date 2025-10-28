@@ -1,0 +1,69 @@
+{% if use_github_actions %}name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: {% raw %}${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}{% endraw %}
+          restore-keys: |
+            {% raw %}${{ runner.os }}-bun-{% endraw %}
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Check formatting
+        run: bun run format:check
+
+      - name: Run linter
+        run: bun run lint
+
+      - name: Type check
+        run: bun run typecheck
+
+      - name: Scan for secrets
+        run: bunx secretlint "**/*"
+
+      - name: Build project
+        run: bun run build
+
+      - name: Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: ./dist
+          key: {% raw %}${{ runner.os }}-build-${{ github.sha }}{% endraw %}
+          restore-keys: |
+            {% raw %}${{ runner.os }}-build-{% endraw %}
+
+      - name: Check for unused code
+        run: bun run knip
+        continue-on-error: true
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: build-artifacts
+          path: dist/
+          retention-days: 7
+{% endif %}

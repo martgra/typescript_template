@@ -1,0 +1,124 @@
+# Minimum Copier version required
+_min_copier_version: "9.0.0"
+
+# Template files are in the template/ subdirectory
+_subdirectory: template
+_templates_suffix: .jinja
+
+_skip_if_exists:
+  - ".env"
+  - "node_modules/"
+
+# Exclude helper files from being copied
+_exclude:
+  - includes
+  - "*.pyc"
+  - "__pycache__"
+  - ".git"
+
+# Welcome message before copying
+_message_before_copy: |
+  🚀 Welcome to the TypeScript Template!
+
+  Let's set up your new TypeScript project.
+
+# Success message after copying
+_message_after_copy: |
+  ✅ Project "{{ project_name }}" created successfully!
+
+  Next steps:
+    cd {{ _copier_conf.dst_path }}
+    bun install
+    bun run prepare
+    bun run dev
+
+  Happy coding! 🎉
+
+# Template Questions
+# ==================
+
+# Project Information
+# -------------------
+project_name:
+  type: str
+  help: What is your project name?
+  default: "typescript-template"
+  placeholder: "my-awesome-project"
+  validator: >-
+    {% if not (project_name | regex_search('^[a-z][a-z0-9-]*$')) %}
+    project_name must start with a letter and only contain lowercase letters, numbers, and hyphens
+    {% endif %}
+
+project_description:
+  type: str
+  help: Brief project description
+  default: "A TypeScript project"
+  placeholder: "My awesome TypeScript application"
+
+# Author Information
+# ------------------
+author_name:
+  type: str
+  help: Author name
+  default: "Your Name"
+
+author_email:
+  type: str
+  help: Author email
+  default: "you@example.com"
+  validator: >-
+    {% if author_email and not (author_email | regex_search('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')) %}
+    Please provide a valid email address
+    {% endif %}
+
+# Auto-generated from project_name - never asked to user
+package_name:
+  type: str
+  when: false  # This makes it hidden - user is never prompted
+  default: "{% from 'includes/slugify.jinja' import slugify %}{{ slugify(project_name) }}"
+
+# Development Environment
+# -----------------------
+use_devcontainer:
+  type: bool
+  help: Include VSCode devcontainer configuration? (Docker required)
+  default: yes
+
+use_vscode:
+  type: bool
+  help: Include VSCode configuration?
+  default: yes
+
+use_github_actions:
+  type: bool
+  help: Include GitHub Actions CI/CD?
+  default: yes
+
+# TypeScript Configuration
+# ------------------------
+typescript_strict:
+  type: bool
+  help: Use strict TypeScript configuration?
+  default: yes
+
+skip_git_init:
+  type: bool
+  when: false  # Hidden parameter for testing
+  default: no
+
+_jinja_extensions:
+  - jinja2.ext.do
+
+_skip_if_exists:
+  - ".env"
+  - "node_modules/"
+  - "CHANGELOG.md"
+  - "LICENSE"
+
+_tasks:
+  - command: "git init"
+    description: "🌀 Initializing git repository"
+    when: "{{ not skip_git_init and use_github_actions }}"
+  - command: "bunx husky install"
+    description: "🔧 Installing git hooks"
+    when: "{{ not skip_git_init }}"

@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace
+
+    volumes:
+      - ..:/workspace
+      - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_extensions:/home/vscode/.vscode-server/extensions
+      - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_commandhistory:/home/vscode/commandhistory
+      - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_cache:/home/vscode/.cache
+      - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_bun:/home/vscode/.bun
+      - /workspace/node_modules
+
+    # Keep container running
+    command: sleep infinity
+
+volumes:
+  {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_extensions:
+  {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_commandhistory:
+  {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_cache:
+  {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_bun:

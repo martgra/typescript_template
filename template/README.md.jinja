@@ -1,68 +1,209 @@
 # {{ project_name }}
 
 {{ project_description }}
+{% if use_github_actions %}
+[![CI](https://github.com/{{ author_name }}/{{ project_name }}/actions/workflows/ci.yaml/badge.svg)](https://github.com/{{ author_name }}/{{ project_name }}/actions/workflows/ci.yaml){% endif %}
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2%2B-blue)](https://www.typescriptlang.org/)]
+[![Bun](https://img.shields.io/badge/bun-latest-black)](https://bun.sh)
 
-## Quick Start
+## ✨ Features
+
+- 🚀 **TypeScript** - Type-safe development{% if typescript_strict %} with strict mode{% endif %}
+- 📦 **Bun** - Fast package management and runtime
+- 🎨 **ESLint & Prettier** - Code quality and formatting
+- 🔍 **Knip** - Detect unused code and dependencies
+- ✅ **Zod** - Runtime environment validation
+- 🔄 **Graceful Shutdown** - Proper cleanup and signal handling
+- 🪝 **Husky** - Git hooks for quality enforcement
+- 🔐 **Secret Detection** - Prevent committing secrets{% if use_github_actions %}
+- ⚙️ **GitHub Actions** - Automated CI/CD{% endif %}{% if use_devcontainer %}
+- 🐳 **Dev Container** - Consistent development environment{% endif %}
+
+## 📋 Prerequisites
+
+- **Bun** 1.3.1+
+- **Git** 2.0+
+
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/{{ author_name }}/{{ project_name }}.git
+cd {{ project_name }}
+
 # Install dependencies
-{{ package_manager }} install
+bun install
 
-# Start development server
-{{ package_manager }} run dev
+# Set up git hooks
+bun run prepare
 
-# Build for production
-{{ package_manager }} run build
-
-# Run production build
-{{ package_manager }} {% if package_manager == "bun" %}start{% else %}run start{% endif %}
+# Copy environment variables
+cp .env.example .env
+# Edit .env with your configuration
 ```
 
-## Development Tools
+### Development
+
+```bash
+# Start development server with watch mode
+bun run dev
+
+# Build for production
+bun run build
+
+# Run production build
+bun start
+```
+
+## 🛠️ Development Tools
 
 ### Linting & Formatting
 
 ```bash
 # Run ESLint
-{{ package_manager }} run lint
-{{ package_manager }} run lint:fix
+bun run lint
+bun run lint:fix
 
 # Run Prettier
-{{ package_manager }} run format
-{{ package_manager }} run format:check
+bun run format
+bun run format:check
 
 # Find unused code/dependencies
-{{ package_manager }} run knip
+bun run knip
 ```
-{% if setup_husky %}
+
 ### Git Hooks
 
-Pre-commit hooks automatically run ESLint and Prettier on staged files:
+Pre-commit hooks automatically:
+- Run ESLint and auto-fix issues
+- Format code with Prettier
+- Scan for secrets with secretlint
 
-- Files are fixed but **not auto-staged**
-- Review changes, then stage and commit again
-{% endif %}
+**Note:** Changes are **not auto-staged**. Review, stage, and commit again if hooks make changes.
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 .{% if use_devcontainer %}
-├── .devcontainer/    # Dev container configuration{% endif %}{% if setup_husky %}
-├── .husky/           # Git hooks{% endif %}
-├── .vscode/          # VSCode settings
-├── src/              # Source code
-└── dist/             # Build output
+├── .devcontainer/       # Dev container configuration{% endif %}{% if use_github_actions %}
+├── .github/
+│   └── workflows/       # GitHub Actions CI/CD{% endif %}
+├── .husky/              # Git hooks{% if use_vscode %}
+├── .vscode/             # VSCode settings{% endif %}
+├── src/
+│   └── index.ts         # Entry point
+├── dist/                # Build output
+├── .env.example         # Environment variables template
+├── CONTRIBUTING.md      # Contribution guidelines
+├── CHANGELOG.md         # Version history
+├── LICENSE              # MIT License file
+└── package.json
 ```
 
-## Configuration Files
+## ⚙️ Configuration Files
 
+- **`.env`** - Environment variables (copy from `.env.example`)
 - **`.prettierrc`** - Code formatting rules
-- **`.eslintrc.json`** - Linting rules
-- **`.editorconfig`** - Editor configuration
-- **`knip.json`** - Unused code detection
-- **`tsconfig.json`** - TypeScript configuration{% if typescript_strict %} (strict mode enabled){% endif %}
+- **`.eslintrc.json`** - Linting rules with TypeScript support
+- **`.editorconfig`** - Editor configuration for consistency
+- **`knip.json`** - Unused code and dependency detection
+- **`.secretlintrc.json`** - Secret detection rules
+- **`tsconfig.json`** - TypeScript compiler options{% if typescript_strict %} (strict mode){% endif %}
 
-## Converting to Monorepo
+## 🚢 Deployment
+
+### Environment Variables
+
+Before deploying, ensure you have a `.env` file with all required environment variables:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit with your production values
+nano .env
+```
+
+### Health Checks
+
+The application includes:
+- Graceful shutdown handling (SIGTERM/SIGINT)
+- Environment validation on startup
+
+### Common Deployment Platforms
+
+#### Fly.io
+
+```bash
+# Install flyctl
+curl -L https://fly.io/install.sh | sh
+
+# Launch your app
+fly launch
+
+# Deploy
+fly deploy
+```
+
+#### Railway
+
+```bash
+# Install Railway CLI
+npm i -g @railway/cli
+
+# Login and init
+railway login
+railway init
+
+# Deploy
+railway up
+```
+
+#### Render
+
+1. Connect your repository at render.com
+2. Select "Node" as the environment
+3. Set build command: `bun install && bun run build`
+4. Set start command: `bun start`
+
+#### DigitalOcean App Platform
+
+1. Connect your repository
+2. Configure build command: `bun install && bun run build`
+3. Configure run command: `bun start`
+4. Set environment variables
+5. Deploy
+
+### Production Checklist
+
+- [ ] Set `NODE_ENV=production`
+- [ ] Configure all required environment variables
+- [ ] Enable health checks
+- [ ] Set up monitoring and logging
+- [ ] Configure proper resource limits
+- [ ] Set up automated backups (if using database)
+- [ ] Enable HTTPS/SSL certificates
+- [ ] Configure CORS if needed
+- [ ] Set up error tracking (Sentry, etc.)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for:
+- Development setup instructions
+- Code style guidelines
+- Pull request process
+- Commit message format
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## 🔧 Advanced Topics
+
+### Converting to Monorepo
 
 If you want to organize your code as a monorepo with separate packages (e.g., server/client):
 
@@ -73,9 +214,9 @@ If you want to organize your code as a monorepo with separate packages (e.g., se
   "name": "{{ project_name }}-monorepo",
   "workspaces": ["packages/*"],
   "scripts": {
-    "build": "{{ package_manager }} run --filter '*' build",
-    "dev": "{{ package_manager }} run --filter '*' dev",
-    "lint": "{{ package_manager }} run --filter '*' lint"
+    "build": "bun run --filter '*' build",
+    "dev": "bun run --filter '*' dev",
+    "lint": "bun run --filter '*' lint"
   }
 }
 ```
