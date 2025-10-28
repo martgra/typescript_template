@@ -118,6 +118,6 @@ _tasks:
   - command: "git init"
     description: "🌀 Initializing git repository"
     when: "{{ not skip_git_init and use_github_actions }}"
-  - command: "bunx husky install"
+  - command: "bunx husky"
     description: "🔧 Installing git hooks"
     when: "{{ not skip_git_init }}"

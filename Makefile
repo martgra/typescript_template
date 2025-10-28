@@ -38,6 +38,13 @@ test:
 	echo "▶️  Running application..."; \
 	timeout 5s bun run dist/index.js 2>&1 | head -5 || true; \
 	\
+	echo "🪝 Testing git hooks..."; \
+	git add -A >/dev/null 2>&1; \
+	echo "  Testing pre-commit hook..."; \
+	hook_output=$$(git commit -m "test: verify hooks" --no-edit 2>&1 || true); \
+	echo "$$hook_output" | grep -E "🔍 Scanning for secrets" >/dev/null && echo "  ✓ Secretlint running" || (echo "  ✗ Secretlint not found in hook" && exit 1); \
+	echo "  ✓ Git hooks validated"; \
+	\
 	echo "════════════════════════════════════════════════════════════════"; \
 	echo "✅ ALL TESTS PASSED!"; \
 	echo "════════════════════════════════════════════════════════════════"
