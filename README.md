@@ -10,7 +10,6 @@
 A TypeScript project
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
-[![CI](https://github.com/Your Name/typescript-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/Your Name/typescript-template/actions/workflows/ci.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2%2B-blue)](https://www.typescriptlang.org/)
 [![Bun](https://img.shields.io/badge/bun-latest-black)](https://bun.sh)
