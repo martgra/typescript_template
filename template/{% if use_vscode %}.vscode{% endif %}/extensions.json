@@ -3,6 +3,7 @@
     "oven.bun-vscode",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
     "eamodio.gitlens",
     "mhutchie.git-graph",
     "Gruntfuggly.todo-tree",
