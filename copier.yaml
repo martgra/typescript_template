@@ -110,7 +110,6 @@ _jinja_extensions:
   - jinja2.ext.do
 
 _skip_if_exists:
-  - ".env"
   - "node_modules/"
   - "CHANGELOG.md"
   - "LICENSE"

@@ -13,8 +13,6 @@
 - 📦 **Bun** - Fast package management and runtime
 - 🎨 **ESLint & Prettier** - Code quality and formatting
 - 🔍 **Knip** - Detect unused code and dependencies
-- ✅ **Zod** - Runtime environment validation
-- 🔄 **Graceful Shutdown** - Proper cleanup and signal handling
 - 🪝 **Husky** - Git hooks for quality enforcement
 - 🔐 **Secret Detection** - Prevent committing secrets{% if use_github_actions %}
 - ⚙️ **GitHub Actions** - Automated CI/CD{% endif %}{% if use_devcontainer %}
@@ -39,10 +37,6 @@ bun install
 
 # Set up git hooks
 bun run prepare
-
-# Copy environment variables
-cp .env.example .env
-# Edit .env with your configuration
 ```
 
 ### Development
@@ -96,7 +90,6 @@ Pre-commit hooks automatically:
 ├── src/
 │   └── index.ts         # Entry point
 ├── dist/                # Build output
-├── .env.example         # Environment variables template
 ├── CONTRIBUTING.md      # Contribution guidelines
 ├── CHANGELOG.md         # Version history
 ├── LICENSE              # MIT License file
@@ -105,7 +98,6 @@ Pre-commit hooks automatically:
 
 ## ⚙️ Configuration Files
 
-- **`.env`** - Environment variables (copy from `.env.example`)
 - **`.prettierrc`** - Code formatting rules
 - **`.eslintrc.json`** - Linting rules with TypeScript support
 - **`.editorconfig`** - Editor configuration for consistency
@@ -115,23 +107,15 @@ Pre-commit hooks automatically:
 
 ## 🚢 Deployment
 
-### Environment Variables
-
-Before deploying, ensure you have a `.env` file with all required environment variables:
+### Building for Production
 
 ```bash
-# Copy the example file
-cp .env.example .env
+# Build the application
+bun run build
 
-# Edit with your production values
-nano .env
+# Run the production build
+bun start
 ```
-
-### Health Checks
-
-The application includes:
-- Graceful shutdown handling (SIGTERM/SIGINT)
-- Environment validation on startup
 
 ### Common Deployment Platforms
 

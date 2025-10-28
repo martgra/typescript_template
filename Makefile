@@ -57,12 +57,9 @@ _test_config:
 	test -f .prettierrc || (echo "    ✗ .prettierrc missing" && exit 1); \
 	test -f knip.json || (echo "    ✗ knip.json missing" && exit 1); \
 	test -f src/index.ts || (echo "    ✗ src/index.ts missing" && exit 1); \
-	test -f src/lib/env.ts || (echo "    ✗ src/lib/env.ts missing" && exit 1); \
-	test -f src/lib/graceful-shutdown.ts || (echo "    ✗ src/lib/graceful-shutdown.ts missing" && exit 1); \
 	test -f README.md || (echo "    ✗ README.md missing" && exit 1); \
 	test -f CONTRIBUTING.md || (echo "    ✗ CONTRIBUTING.md missing" && exit 1); \
 	test -f CHANGELOG.md || (echo "    ✗ CHANGELOG.md missing" && exit 1); \
-	test -f .env.example || (echo "    ✗ .env.example missing" && exit 1); \
 	echo "    ✓ All core files present"; \
 	\
 	echo "  🔍 Checking for template artifacts..."; \
