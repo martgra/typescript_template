@@ -15,8 +15,7 @@ test:
 	git add -A >/dev/null; \
 	bun install --no-cache >/dev/null; \
 	echo "🚀 Running pre-commit hooks..."; \
-	bun run prepare >/dev/null; \
-	git commit -m "test: validate hooks" 2>&1 | grep -E "🔍 Scanning for secrets" && echo "  ✓ Hooks validated" || (echo "  ✗ Hooks failed" && exit 1); \
+	git commit -m "test: validate hooks" 2>&1 | tee /tmp/hook_output.log | grep -E "🔍 Scanning for secrets" >/dev/null && echo "  ✓ Hooks validated" || (echo "  ✗ Hooks failed" && cat /tmp/hook_output.log && exit 1); \
 	cd - >/dev/null; \
 	rm -rf "$$tmpdir"; \
 	echo "✅ All checks passed and temp folder cleaned up."
