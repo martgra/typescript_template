@@ -45,19 +45,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Copier
-        run: |
-          sudo apt-get update && sudo apt-get install -y python3-pip python3-venv
-          python3 -m venv /tmp/copier-venv
-          /tmp/copier-venv/bin/pip install copier
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
 
       - name: Run template tests
-        run: |
-          export PATH="/tmp/copier-venv/bin:$PATH"
-          make test
+        run: make test
 
       - name: Build template output
-        run: |
+        run: make build
           export PATH="/tmp/copier-venv/bin:$PATH"
           make build
 
