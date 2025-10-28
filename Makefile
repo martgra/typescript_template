@@ -12,6 +12,8 @@ test:
 	$(COPIER) copy --vcs-ref=HEAD . "$$tmpdir" --defaults --force --trust 2>&1 | grep -v "FutureWarning\|DirtyLocalWarning" || true; \
 	cd "$$tmpdir"; \
 	echo "🌀 Initializing git repo..."; \
+	git config user.email "test@example.com"; \
+	git config user.name "Test User"; \
 	git add -A >/dev/null; \
 	bun install --no-cache >/dev/null; \
 	echo "🚀 Running pre-commit hooks..."; \
