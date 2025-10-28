@@ -1,9 +1,12 @@
 {
-  "name": "multiplayer-game",
+  "name": "typescript-template",
   "version": "1.0.0",
+  "description": "A TypeScript project",
   "private": true,
+  "author": "Your Name <you@example.com>",
   "scripts": {
-    "build": "tsc",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "typecheck": "tsc --noEmit",
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
@@ -32,8 +35,10 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "husky": "^8.0.3",
-    "knip": "^5.33.3",
     "lint-staged": "^15.2.10",
+    "@secretlint/secretlint-rule-preset-recommend": "^8.0.0",
+    "secretlint": "^8.0.0",
+    "knip": "^5.33.3",
     "prettier": "^3.0.0",
     "typescript": "^5.2.2"
   }

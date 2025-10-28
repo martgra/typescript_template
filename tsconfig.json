@@ -7,6 +7,10 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,8 +21,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "outDir": "./dist"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "build"]

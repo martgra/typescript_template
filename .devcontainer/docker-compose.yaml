@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace
+
+    volumes:
+      - ..:/workspace
+      - typescript_template_extensions:/home/vscode/.vscode-server/extensions
+      - typescript_template_commandhistory:/home/vscode/commandhistory
+      - typescript_template_cache:/home/vscode/.cache
+      - typescript_template_bun:/home/vscode/.bun
+      - /workspace/node_modules
+
+    # Keep container running
+    command: sleep infinity
+
+volumes:
+  typescript_template_extensions:
+  typescript_template_commandhistory:
+  typescript_template_cache:
+  typescript_template_bun:

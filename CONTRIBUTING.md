@@ -1,0 +1,193 @@
+# Contributing to typescript-template
+
+Thank you for considering contributing to typescript-template! This document provides guidelines and instructions for contributing.
+
+## Development Setup
+
+### Prerequisites
+
+- [Bun](https://bun.sh/) 1.3.1 or higher
+- Git
+- Docker (for devcontainer)
+
+### Getting Started
+
+1. **Fork and clone the repository**
+
+   ```bash
+   git fork typescript-template
+   cd typescript-template
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   bun install
+   ```
+
+3. **Optional: Use devcontainer**
+
+   Open the project in VS Code and click "Reopen in Container" when prompted.
+
+4. **Create a new branch**
+
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+## Development Workflow
+
+### Running the Project
+
+```bash
+# Development mode with watch
+bun run dev
+
+# Production build
+bun run build
+bun start
+```
+
+### Code Quality
+
+```bash
+# Run linter
+bun run lint
+
+# Auto-fix linting issues
+bun run lint:fix
+
+# Check code formatting
+bun run format:check
+
+# Auto-format code
+bun run format
+
+# Find unused code
+bun run knip
+```
+
+## Code Style Guidelines
+
+### TypeScript
+
+- Use TypeScript with strict mode enabled
+- Prefer `const` over `let`, avoid `var`
+- Use meaningful variable and function names
+- Add JSDoc comments for public APIs
+- Avoid `any` type - use `unknown` if type is truly unknown
+
+### File Organization
+
+```
+src/
+├── index.ts           # Entry point
+├── lib/               # Reusable utilities
+└── types/             # TypeScript type definitions
+```
+
+### Imports
+
+- Imports are automatically sorted by `eslint-plugin-simple-import-sort`
+- Order: Node built-ins → External packages → Internal modules
+
+### Git Hooks
+
+Pre-commit hooks automatically run:
+
+- ESLint (auto-fix)
+- Prettier (auto-format)
+- Secret detection
+
+**Important:** If the hook makes changes, they are **not** automatically staged. Review the changes, stage them, and commit again.
+
+## Pull Request Process
+
+1. **Update documentation** - Update README.md if you change functionality
+2. **Run all checks** - Ensure linting, formatting, and build pass
+3. **Write clear commit messages** - Follow [Conventional Commits](https://www.conventionalcommits.org/)
+
+   ```
+   feat: add new feature
+   fix: resolve bug in X
+   docs: update README
+   refactor: restructure Z
+   ```
+
+4. **Create Pull Request**
+   - Use a clear, descriptive title
+   - Reference any related issues
+   - Describe what changed and why
+   - Include screenshots for UI changes
+
+5. **Address review feedback** - Respond to comments and make requested changes
+
+## Commit Message Format
+
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Types:**
+
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `refactor`: Code refactoring
+- `chore`: Maintenance tasks
+
+**Example:**
+
+```
+feat(auth): add JWT authentication
+
+Implemented JWT-based authentication with refresh tokens.
+Includes middleware for protected routes.
+
+Closes #123
+```
+
+## Reporting Issues
+
+### Bug Reports
+
+Include:
+
+- Clear description of the issue
+- Steps to reproduce
+- Expected vs actual behavior
+- Environment details (OS, Node/Bun version, etc.)
+- Error messages and stack traces
+
+### Feature Requests
+
+Include:
+
+- Clear description of the feature
+- Use case and motivation
+- Proposed implementation (optional)
+
+## Code Review
+
+All submissions require review. We aim to:
+
+- Provide feedback within 2-3 business days
+- Be constructive and respectful
+- Focus on code quality, not personal preferences
+
+## Questions?
+
+- Open an issue for questions
+- Tag it with `question` label
+- Email you@example.com for private inquiries
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the MIT license.
