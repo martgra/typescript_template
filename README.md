@@ -47,7 +47,7 @@ The template will ask you:
 This repository contains the Copier template itself. To test the template:
 
 ```bash
-# Run full validation (generates project, runs all checks)
+# Run validation (generates project, runs all checks)
 make test
 
 # Generate template to build_output/ for inspection
@@ -57,15 +57,7 @@ make build
 make clean
 ```
 
-### Testing Workflow
-
-The `make test` command:
-
-1. Generates a project from the template in a temp directory
-2. Initializes git and installs dependencies
-3. Sets up git hooks
-4. Runs all quality checks (lint, format, tests, knip)
-5. Cleans up the temp directory
+The `make test` command generates a project, installs dependencies, and runs all quality checks (lint, format, build, and runtime test).
 
 ## 📁 Template Structure
 
