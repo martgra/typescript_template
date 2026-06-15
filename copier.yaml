@@ -8,6 +8,8 @@ _templates_suffix: .jinja
 _skip_if_exists:
   - ".env"
   - "node_modules/"
+  - "CHANGELOG.md"
+  - "LICENSE"
 
 # Exclude helper files from being copied
 _exclude:
@@ -108,11 +110,6 @@ skip_git_init:
 
 _jinja_extensions:
   - jinja2.ext.do
-
-_skip_if_exists:
-  - "node_modules/"
-  - "CHANGELOG.md"
-  - "LICENSE"
 
 _tasks:
   - command: "git init"

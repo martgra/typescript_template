@@ -8,7 +8,7 @@ on:
 # REQUIRED REPOSITORY SETTINGS:
 # 1. Settings > Actions > General > Workflow permissions:
 #    Enable "Allow GitHub Actions to create and approve pull requests".
-# 2. Add a repository secret named WORKFLOW_TOKEN (a PAT or GitHub App token)
+# 2. Add a repository secret named FINE_GRAINED_ACTION_TOKEN (a PAT or GitHub App token)
 #    with the `workflow` scope (classic PAT: repo + workflow). The default
 #    GITHUB_TOKEN is NOT allowed to create or update files under
 #    .github/workflows/, and the generated example project ships a CI
@@ -37,7 +37,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
@@ -83,7 +83,7 @@ jobs:
       - name: Clone repository for main branch
         run: |
           cd ..
-          git clone https://x-access-token:${{ secrets.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git main-repo
+          git clone https://x-access-token:${{ secrets.FINE_GRAINED_ACTION_TOKEN }}@github.com/${{ github.repository }}.git main-repo
           cd main-repo
           # Try to checkout main, or create orphan if it doesn't exist
           git checkout main 2>/dev/null || git checkout --orphan main
@@ -98,7 +98,7 @@ jobs:
           # Remove copier answers file (shouldn't be in generated project)
           rm -f .copier-answers.yaml .copier-answers.yml
           # Keep .github/workflows so the rendered example CI ships to main
-          # (requires WORKFLOW_TOKEN; the default GITHUB_TOKEN cannot write them)
+          # (requires FINE_GRAINED_ACTION_TOKEN; the default GITHUB_TOKEN cannot write them)
 
       - name: Check for changes
         id: check_changes

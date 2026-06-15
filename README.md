@@ -8,7 +8,7 @@ A minimal [Copier](https://copier.readthedocs.io/) template for TypeScript proje
 
 - 🚀 **TypeScript**: Simple Hello World starter with optional strict mode
 - 📦 **Bun**: Fast package manager and runtime
-- 🔒 **Quality & Security**: ESLint, Prettier, Knip, import sorting
+- 🔒 **Quality & Security**: Biome (lint, format, import sorting), Prettier for docs, Knip
 - 🪝 **Git hooks**: Husky with lint-staged and secretlint (always enabled)
 - 🔐 **Secret detection**: Secretlint in pre-commit hooks and CI
 - 🐳 **Optional devcontainer**: Reproducible development environment
@@ -76,8 +76,8 @@ template/                           # Template files (what gets copied)
 ├── package.json.jinja              # Dependencies and scripts
 ├── tsconfig.json.jinja             # TypeScript configuration
 ├── .secretlintrc.json.jinja        # Secret detection rules
-├── .eslintrc.json.jinja            # ESLint configuration
-├── .prettierrc.jinja               # Prettier configuration
+├── biome.json                      # Lint, format & import sort rules
+├── .prettierrc.jinja               # Prettier config (Markdown & YAML)
 ├── knip.json.jinja                 # Unused code detection
 ├── .editorconfig.jinja             # Editor settings
 └── .gitignore.jinja                # Git ignore patterns
@@ -108,9 +108,8 @@ This will prompt you for any new questions and merge in template updates.
 
 ### Code Quality
 
-- ✅ ESLint with TypeScript support
-- ✅ Prettier for consistent formatting
-- ✅ Import sorting (simple-import-sort)
+- ✅ Biome for linting, formatting, and import sorting (JS/TS/JSON)
+- ✅ Prettier for Markdown & YAML formatting
 - ✅ Knip for unused code detection
 - ✅ Secretlint for credential scanning
 
