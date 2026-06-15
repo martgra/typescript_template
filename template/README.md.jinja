@@ -18,7 +18,8 @@
 
 - 🚀 **TypeScript** - Type-safe development{% if typescript_strict %} with strict mode{% endif %}
 - 📦 **Bun** - Fast package management and runtime
-- 🎨 **ESLint & Prettier** - Code quality and formatting
+- 🎨 **Biome** - Lint, format, and import sorting for code (JS/TS/JSON)
+- 📝 **Prettier** - Formatting for Markdown & YAML
 - 🔍 **Knip** - Detect unused code and dependencies
 - 🪝 **Husky** - Git hooks for quality enforcement
 - 🔐 **Secret Detection** - Prevent committing secrets{% if use_github_actions %}
@@ -49,11 +50,12 @@ bun start
 ### Linting & Formatting
 
 ```bash
-# Run ESLint
+# Run Biome (lint + format + organize imports for code)
+bun run check
 bun run lint
 bun run lint:fix
 
-# Run Prettier
+# Check/fix formatting (Biome for code, Prettier for docs)
 bun run format
 bun run format:check
 
@@ -65,8 +67,8 @@ bun run knip
 
 Pre-commit hooks automatically:
 
-- Run ESLint and auto-fix issues
-- Format code with Prettier
+- Run Biome (lint, format, organize imports)
+- Format Markdown & YAML with Prettier
 - Scan for secrets with secretlint
 
 **Note:** Changes are **not auto-staged**. Review, stage, and commit again if hooks make changes.
@@ -91,8 +93,8 @@ Pre-commit hooks automatically:
 
 ## ⚙️ Configuration Files
 
-- **`.prettierrc`** - Code formatting rules
-- **`.eslintrc.json`** - Linting rules with TypeScript support
+- **`biome.json`** - Lint, format, and import sort rules (JS/TS/JSON)
+- **`.prettierrc`** - Formatting rules for Markdown & YAML
 - **`.editorconfig`** - Editor configuration for consistency
 - **`knip.json`** - Unused code and dependency detection
 - **`.secretlintrc.json`** - Secret detection rules

@@ -91,15 +91,15 @@ src/
 
 ### Imports
 
-- Imports are automatically sorted by `eslint-plugin-simple-import-sort`
+- Imports are automatically sorted by Biome's organize-imports action
 - Order: Node built-ins → External packages → Internal modules
 
 ### Git Hooks
 
 Pre-commit hooks automatically run:
 
-- ESLint (auto-fix)
-- Prettier (auto-format)
+- Biome (lint, format, organize imports)
+- Prettier (Markdown & YAML formatting)
 - Secret detection
 
 **Important:** If the hook makes changes, they are **not** automatically staged. Review the changes, stage them, and commit again.
