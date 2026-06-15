@@ -1,0 +1,18 @@
+# Prettier is scoped to Markdown & YAML only.
+**/*.js
+**/*.jsx
+**/*.mjs
+**/*.cjs
+**/*.ts
+**/*.tsx
+**/*.mts
+**/*.cts
+**/*.json
+**/*.jsonc
+**/*.html
+**/*.css
+
+# Build output & deps
+dist
+build
+node_modules
