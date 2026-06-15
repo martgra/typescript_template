@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint and format check
+        run: bunx @biomejs/biome ci .
+
+      - name: Check docs formatting (Markdown & YAML)
+        run: bunx prettier --check "**/*.{md,yml,yaml}"
+
+      - name: Type check
+        run: bun run typecheck
+
+      - name: Scan for secrets
+        run: bunx secretlint "**/*"
+
+      - name: Build project
+        run: bun run build
+
+      - name: Check for unused code
+        run: bun run knip
+        continue-on-error: true
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: build-artifacts
+          path: dist/
+          retention-days: 7
