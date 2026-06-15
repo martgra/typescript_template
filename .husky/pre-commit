@@ -2,10 +2,10 @@
 
 # Run secret detection
 echo "🔍 Scanning for secrets..."
-bun run secretlint "**/*"
+bunx secretlint "**/*"
 
 # Run lint-staged
-bun run lint-staged --allow-empty
+bunx lint-staged --allow-empty
 
 # Prevent commit if lint-staged made changes
 git diff --exit-code || (echo "❌ lint-staged made changes. Please review, stage, and commit again." && exit 1)
