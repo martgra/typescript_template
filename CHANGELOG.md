@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Project scaffolding with TypeScript strict mode
-- ESLint and Prettier configuration
+- Biome for linting, formatting, and import sorting; Prettier for Markdown & YAML
 - Bun as package manager and runtime
 - Husky pre-commit hooks with lint-staged
 - Secret detection with secretlint
