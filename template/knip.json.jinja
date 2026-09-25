@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": ["src/index.ts"],
+  "entry": [{% if project_type == 'spa' %}"index.html"{% else %}"src/index.ts"{% endif %}],
   "project": ["src/**/*.ts", "src/**/*.tsx"],
   "ignore": [
     "**/*.test.ts",

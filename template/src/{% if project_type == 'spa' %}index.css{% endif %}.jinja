@@ -1,0 +1,12 @@
+{% if use_tailwind %}@import "tailwindcss";
+{% else %}*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+{% endif %}

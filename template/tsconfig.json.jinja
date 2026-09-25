@@ -2,10 +2,14 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "lib": ["ES2022"],
+    "lib": [{% if project_type == 'spa' %}"ES2022", "DOM", "DOM.Iterable"{% else %}"ES2022"{% endif %}],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "noEmit": true,{% if project_type == 'spa' %}
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+    "moduleDetection": "force",
+    "types": ["vite/client", "node"],{% endif %}
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -19,13 +23,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,{% else %}
+    "noFallthroughCasesInSwitch": true{% else %}
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,{% endif %}
-    "outDir": "./dist"
+    "resolveJsonModule": true{% endif %}{% if project_type != 'spa' %},
+    "outDir": "./dist"{% endif %}
   },
-  "include": ["src/**/*"],
+  "include": [{% if project_type == 'spa' %}"src", "vite.config.ts"{% else %}"src/**/*"{% endif %}],
   "exclude": ["node_modules", "dist", "build"]
 }

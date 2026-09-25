@@ -19,20 +19,17 @@ Thank you for considering contributing to {{ project_name }}! This document prov
    cd {{ project_name }}
    ```
 
-2. **Install dependencies**
+1. **Install dependencies**
 
    ```bash
    bun install
    ```
-
-   {% if use_devcontainer %}
-
-3. **Optional: Use devcontainer**
+{% if use_devcontainer %}
+1. **Optional: Use devcontainer**
 
    Open the project in VS Code and click "Reopen in Container" when prompted.
-   {% endif %}
-
-4. **Create a new branch**
+{% endif %}
+1. **Create a new branch**
 
    ```bash
    git checkout -b feature/your-feature-name

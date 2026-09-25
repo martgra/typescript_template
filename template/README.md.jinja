@@ -17,7 +17,10 @@
 ## ✨ Features
 
 - 🚀 **TypeScript** - Type-safe development{% if typescript_strict %} with strict mode{% endif %}
-- 📦 **Bun** - Fast package management and runtime
+- 📦 **Bun** - Fast package management and runtime{% if project_type == 'spa' %}
+- ⚡ **Vite** - Lightning-fast dev server and bundler
+- ⚛️ **React 19** - Component-based UI{% if use_tailwind %}
+- 🌬️ **Tailwind CSS 4** - Utility-first styling{% endif %}{% endif %}
 - 🎨 **Biome** - Lint, format, and import sorting for code (JS/TS/JSON)
 - 📝 **Prettier** - Formatting for Markdown & YAML
 - 🔍 **Knip** - Detect unused code and dependencies
@@ -34,7 +37,16 @@ bun install
 
 # Set up git hooks
 bun run prepare
+{% if project_type == 'spa' %}
+# Start the dev server (http://localhost:5173)
+bun run dev
 
+# Build for production (outputs to dist/)
+bun run build
+
+# Preview the production build
+bun run preview
+```{% else %}
 # Start development with watch mode
 bun run dev
 
@@ -43,7 +55,7 @@ bun run build
 
 # Run production build
 bun start
-```
+```{% endif %}
 
 ## 🛠️ Development Tools
 
@@ -81,10 +93,17 @@ Pre-commit hooks automatically:
 ├── .github/
 │   └── workflows/       # GitHub Actions CI/CD{% endif %}
 ├── .husky/              # Git hooks{% if use_vscode %}
-├── .vscode/             # VSCode settings{% endif %}
+├── .vscode/             # VSCode settings{% endif %}{% if project_type == 'spa' %}
+├── index.html           # Vite entry point
+├── vite.config.ts       # Vite configuration
+├── src/
+│   ├── main.tsx         # React bootstrap
+│   ├── App.tsx          # Root component
+│   └── index.css        # Global styles
+├── dist/                # Build output{% else %}
 ├── src/
 │   └── index.ts         # Entry point
-├── dist/                # Build output
+├── dist/                # Build output{% endif %}
 ├── CONTRIBUTING.md      # Contribution guidelines
 ├── CHANGELOG.md         # Version history
 ├── LICENSE              # MIT License file
@@ -98,7 +117,8 @@ Pre-commit hooks automatically:
 - **`.editorconfig`** - Editor configuration for consistency
 - **`knip.json`** - Unused code and dependency detection
 - **`.secretlintrc.json`** - Secret detection rules
-- **`tsconfig.json`** - TypeScript compiler options{% if typescript_strict %} (strict mode){% endif %}
+- **`tsconfig.json`** - TypeScript compiler options{% if typescript_strict %} (strict mode){% endif %}{% if project_type == 'spa' %}
+- **`vite.config.ts`** - Vite build and dev server configuration{% endif %}
 
 ## 🤝 Contributing
 

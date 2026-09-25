@@ -9,10 +9,17 @@
     "bun": ">=1.3.1"
   },
   "scripts": {
+{%- if project_type == 'spa' %}
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+{%- else %}
     "build": "bun build src/index.ts --outdir dist --target bun",
     "typecheck": "tsc --noEmit",
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
+{%- endif %}
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write . && prettier --write \"**/*.{md,yml,yaml}\"",
@@ -22,7 +29,11 @@
     "knip": "knip",
     "knip:production": "knip --production",
     "prepare": "husky"
-  },
+  },{% if project_type == 'spa' %}
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },{% endif %}
   "lint-staged": {
     "*": [
       "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
@@ -40,6 +51,12 @@
     "secretlint": "^11.2.5",
     "knip": "^5.33.3",
     "prettier": "^3.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2"{% if project_type == 'spa' %},
+    "vite": "^8.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"{% if use_tailwind %},
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0"{% endif %}{% endif %}
   }
 }

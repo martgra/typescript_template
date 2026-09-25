@@ -57,6 +57,22 @@ project_description:
   default: "A TypeScript project"
   placeholder: "My awesome TypeScript application"
 
+# Project flavour
+# ---------------
+project_type:
+  type: str
+  help: What kind of project is this?
+  choices:
+    "CLI / library (Bun)": cli
+    "Web app (Vite + React SPA)": spa
+  default: cli
+
+use_tailwind:
+  type: bool
+  help: Include Tailwind CSS 4?
+  default: no
+  when: "{{ project_type == 'spa' }}"
+
 # Author Information
 # ------------------
 author_name:

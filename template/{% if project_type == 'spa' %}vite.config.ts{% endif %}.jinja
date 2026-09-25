@@ -1,0 +1,13 @@
+import { fileURLToPath, URL } from "node:url";
+{% if use_tailwind %}import tailwindcss from "@tailwindcss/vite";
+{% endif %}import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [react(){% if use_tailwind %}, tailwindcss(){% endif %}],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+});
