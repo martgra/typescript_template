@@ -1,0 +1,55 @@
+# AGENTS.md
+
+This file provides guidance to Claude Code and other AI agents working in this repository.
+
+## Runtime & Tooling
+
+- **Runtime**: Bun — use `bun run <script>` for all project commands, never `node` directly
+- **Package manager**: `bun install` / `bun add` — never npm, yarn, or pnpm
+- **Available scripts**: see `package.json` → `scripts`
+
+## Code Quality
+
+Run these before committing:
+
+```bash
+bun run check        # Biome: lint + format + import order (JS/TS/JSON)
+bun run format       # Prettier: Markdown & YAML only
+bun run typecheck    # TypeScript type check (no emit)
+bun run secretlint   # Scan for accidentally committed secrets
+```
+
+Find and remove dead code:
+
+```bash
+bun run knip         # Unused files, exports, and dependencies
+```
+
+## Before Committing
+
+1. `bun run check` — auto-fixes lint, format, and import order for staged files
+2. Re-stage any files the hook modified (hooks never auto-stage)
+3. Commit — pre-commit hook re-validates
+
+## Before Pushing
+
+The pre-push hook automatically runs:
+
+- `bun run build` — full compile
+- `bun run knip` — unused code and dependency check
+
+Fix any failures before pushing.
+
+## Rules
+
+- TypeScript strict mode is on — all types must be explicit, no `any`
+- ESM only — never use `require()` or `module.exports`
+- Never commit `.env` files, tokens, or credentials
+- `bun run check` must pass before every commit
+
+## Ask Before
+
+- Adding or removing dependencies (`bun add` / `bun remove`)
+- Changing `tsconfig.json` settings
+- Modifying `.github/workflows/` CI configuration
+- Changing build output paths or structure

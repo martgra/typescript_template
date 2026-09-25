@@ -21,10 +21,11 @@ A TypeScript project
 - 🎨 **Biome** - Lint, format, and import sorting for code (JS/TS/JSON)
 - 📝 **Prettier** - Formatting for Markdown & YAML
 - 🔍 **Knip** - Detect unused code and dependencies
-- 🪝 **Husky** - Git hooks for quality enforcement
+- 🪝 **Husky** - Two-tier git hooks (commit + push)
 - 🔐 **Secret Detection** - Prevent committing secrets
 - ⚙️ **GitHub Actions** - Automated CI/CD
 - 🐳 **Dev Container** - Consistent development environment
+- 🤖 **AGENTS.md** - AI agent conventions for Claude Code
 
 ## Quick Start
 
@@ -65,11 +66,16 @@ bun run knip
 
 ### Git Hooks
 
-Pre-commit hooks automatically:
+**Pre-commit** (fast, runs on staged files):
 
+- Scan for secrets with secretlint
 - Run Biome (lint, format, organize imports)
 - Format Markdown & YAML with Prettier
-- Scan for secrets with secretlint
+
+**Pre-push** (slow, runs on full project):
+
+- Build the project (`bun run build`)
+- Check for unused code and dependencies (`bun run knip`)
 
 **Note:** Changes are **not auto-staged**. Review, stage, and commit again if hooks make changes.
 

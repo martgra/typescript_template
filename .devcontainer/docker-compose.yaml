@@ -10,7 +10,7 @@ services:
       - typescript_template_extensions:/home/vscode/.vscode-server/extensions
       - typescript_template_commandhistory:/home/vscode/commandhistory
       - typescript_template_cache:/home/vscode/.cache
-      - typescript_template_bun:/home/vscode/.bun
+      - typescript_template_mise:/home/vscode/.local/share/mise
       - /workspace/node_modules
 
     # Keep container running
@@ -20,4 +20,4 @@ volumes:
   typescript_template_extensions:
   typescript_template_commandhistory:
   typescript_template_cache:
-  typescript_template_bun:
+  typescript_template_mise:

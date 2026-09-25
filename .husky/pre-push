@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+echo "🏗️ Building project..."
+bun run build
+
+echo "🔍 Checking for unused code and dependencies..."
+bun run knip
