@@ -28,7 +28,9 @@
     "secretlint": "secretlint",
     "knip": "knip",
     "knip:production": "knip --production",
-    "prepare": "husky"
+    "prepare": "husky"{% if github_username %},
+    "repo:create": "gh repo create {{ github_username }}/{{ project_name }} --private --source=. --remote=origin --push",
+    "repo:push": "git push -u origin main"{% endif %}
   },{% if project_type == 'spa' %}
   "dependencies": {
     "react": "^19.0.0",
