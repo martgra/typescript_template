@@ -19,17 +19,17 @@ Thank you for considering contributing to typescript-template! This document pro
    cd typescript-template
    ```
 
-2. **Install dependencies**
+1. **Install dependencies**
 
    ```bash
    bun install
    ```
 
-3. **Optional: Use devcontainer**
+1. **Optional: Use devcontainer**
 
    Open the project in VS Code and click "Reopen in Container" when prompted.
 
-4. **Create a new branch**
+1. **Create a new branch**
 
    ```bash
    git checkout -b feature/your-feature-name
