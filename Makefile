@@ -8,7 +8,7 @@ COPIER := uvx --cache-dir /tmp/uvx-cache copier
 test:
 	@set -euo pipefail; \
 	tmpdir=$$(mktemp -d); \
-	echo "�� Generating template into: $$tmpdir"; \
+	echo "🔧 Generating template into: $$tmpdir"; \
 	$(COPIER) copy --vcs-ref=HEAD . "$$tmpdir" --defaults --force --trust 2>&1 | grep -v "FutureWarning\|DirtyLocalWarning" || true; \
 	cd "$$tmpdir"; \
 	echo "🌀 Initializing git repo..."; \
@@ -17,7 +17,9 @@ test:
 	git add -A >/dev/null; \
 	bun install --no-cache >/dev/null; \
 	echo "🚀 Running pre-commit hooks..."; \
-	git commit -m "test: validate hooks" 2>&1 | tee /tmp/hook_output.log | grep -E "🔍 Scanning for secrets" >/dev/null && echo "  ✓ Hooks validated" || (echo "  ✗ Hooks failed" && cat /tmp/hook_output.log && exit 1); \
+	git commit -m "test: validate hooks" 2>&1 | tee /tmp/hook_output.log | grep -E "🔍 Scanning for secrets" >/dev/null && echo "  ✓ Pre-commit validated" || (echo "  ✗ Pre-commit failed" && cat /tmp/hook_output.log && exit 1); \
+	echo "🚀 Running pre-push hooks..."; \
+	sh .husky/pre-push 2>&1 | tee /tmp/prepush_output.log && echo "  ✓ Pre-push validated" || (echo "  ✗ Pre-push failed" && cat /tmp/prepush_output.log && exit 1); \
 	cd - >/dev/null; \
 	rm -rf "$$tmpdir"; \
 	echo "✅ All checks passed and temp folder cleaned up."

@@ -2,7 +2,7 @@
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
 
-A minimal [Copier](https://copier.readthedocs.io/) template for TypeScript projects with essential quality tooling.
+A minimal [Copier](https://copier.readthedocs.io/en/stable/) template for TypeScript projects with essential quality tooling.
 
 ## ✨ Features
 

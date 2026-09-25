@@ -10,6 +10,7 @@ _skip_if_exists:
   - "node_modules/"
   - "CHANGELOG.md"
   - "LICENSE"
+  - "AGENTS.md"
 
 # Exclude helper files from being copied
 _exclude:
@@ -111,6 +112,18 @@ use_github_actions:
   type: bool
   help: Include GitHub Actions CI/CD?
   default: yes
+
+use_agents:
+  type: bool
+  help: Include AGENTS.md with AI agent conventions for this project?
+  default: yes
+
+# GitHub Integration
+# ------------------
+github_username:
+  type: str
+  help: GitHub username or org (leave empty to skip repo creation scripts)
+  default: ""
 
 # TypeScript Configuration
 # ------------------------

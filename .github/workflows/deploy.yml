@@ -44,7 +44,7 @@ jobs:
       - name: Check markdown links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress --exclude 'file://' --exclude 'host\.docker\.internal' '**/*.md' '**/*.md.jinja'
+          args: --verbose --no-progress --exclude 'file://' --exclude 'host\.docker\.internal' --exclude 'localhost' '**/*.md' '**/*.md.jinja'
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
