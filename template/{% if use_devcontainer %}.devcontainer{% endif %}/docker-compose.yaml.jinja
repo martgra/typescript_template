@@ -10,7 +10,7 @@ services:
       - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_extensions:/home/vscode/.vscode-server/extensions
       - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_commandhistory:/home/vscode/commandhistory
       - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_cache:/home/vscode/.cache
-      - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_bun:/home/vscode/.bun
+      - {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_mise:/home/vscode/.local/share/mise
       - /workspace/node_modules
 
     # Keep container running
@@ -20,4 +20,4 @@ volumes:
   {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_extensions:
   {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_commandhistory:
   {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_cache:
-  {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_bun:
+  {{ project_name | lower | replace(' ', '_') | replace('-', '_') }}_mise:

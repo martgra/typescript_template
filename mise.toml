@@ -1,0 +1,5 @@
+# Tool versions for the template repo's dev environment.
+# `mise install` provisions these; CI and the devcontainer share the same pins.
+[tools]
+bun = "1.3.14"
+uv = "0.11.21"
