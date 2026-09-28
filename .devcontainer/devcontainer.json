@@ -21,7 +21,7 @@
   "containerUser": "vscode",
   "remoteUser": "vscode",
   "remoteEnv": {
-    "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin:/home/vscode/.bun/bin"
+    "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin:/home/vscode/.local/share/mise/shims"
   },
   "updateRemoteUserUID": true,
   "postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
