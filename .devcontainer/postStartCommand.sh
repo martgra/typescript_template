@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -e  # Exit immediately if a command exits with a non-zero status.
+set -euo pipefail
 
-echo "Configuring git safe directory..."
-git config --global --add safe.directory /workspace &>/dev/null
+echo "Configuring git safe directory (idempotent)..."
+git config --global --add safe.directory /workspace 2>/dev/null || true
+
+echo "PostStart complete"
