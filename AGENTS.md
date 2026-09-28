@@ -2,27 +2,30 @@
 
 This file provides guidance to Claude Code and other AI agents working in this repository.
 
-## Runtime & Tooling
+## Project Overview
 
 - **Runtime**: Bun — use `bun run <script>` for all project commands, never `node` directly
 - **Package manager**: `bun install` / `bun add` — never npm, yarn, or pnpm
+- **Type checking**: TypeScript strict mode — all types must be explicit, no `any`
 - **Available scripts**: see `package.json` → `scripts`
 
-## Code Quality
+## Project Structure
 
-Run these before committing:
+```
+src/
+  ├── index.ts           # CLI entry point
+  └── lib/               # Reusable utilities
+```
+
+## Critical Commands
 
 ```bash
 bun run check        # Biome: lint + format + import order (JS/TS/JSON)
 bun run format       # Prettier: Markdown & YAML only
 bun run typecheck    # TypeScript type check (no emit)
 bun run secretlint   # Scan for accidentally committed secrets
-```
-
-Find and remove dead code:
-
-```bash
-bun run knip         # Unused files, exports, and dependencies
+bun run knip         # Find unused files, exports, and dependencies
+bun run build        # Full compile
 ```
 
 ## Before Committing
@@ -40,16 +43,92 @@ The pre-push hook automatically runs:
 
 Fix any failures before pushing.
 
-## Rules
+## Code Conventions
 
-- TypeScript strict mode is on — all types must be explicit, no `any`
-- ESM only — never use `require()` or `module.exports`
-- Never commit `.env` files, tokens, or credentials
-- `bun run check` must pass before every commit
+- **ESM only** — never use `require()` or `module.exports`
+- **Imports** are automatically sorted by Biome — don't reorder manually
+- **Line length**: 100 characters maximum
+- **Naming**: `camelCase` for functions/variables, `PascalCase` for types/classes, `SCREAMING_SNAKE_CASE` for constants
 
-## Ask Before
+### ✅ Good Example
+
+```typescript
+interface UserConfig {
+  id: string;
+  name: string;
+  email?: string;
+}
+
+async function loadUserConfig(userId: string): Promise<UserConfig> {
+  const raw = await Bun.file(`config/${userId}.json`).text();
+  return JSON.parse(raw) as UserConfig;
+}
+```
+
+### ❌ Bad Example
+
+```typescript
+// No type hints, implicit any, no error handling
+async function load(id) {
+  return JSON.parse(await Bun.file(`config/${id}.json`).text());
+}
+```
+
+## Testing
+
+```bash
+bun test             # Run all tests
+bun test --watch     # Watch mode
+bun test src/lib/    # Run specific directory
+```
+
+- Use `describe` + `it` / `test` blocks — no class-based test suites
+- Descriptive names: `it("returns null when user not found")`
+- Prefer `expect(...).toBe(...)` assertions
+- Put shared setup in `beforeEach` / `afterEach`, not global state
+
+## Error Handling
+
+- Prefer explicit `throw new Error(...)` with descriptive messages over silent failures
+- Use `unknown` for caught errors, narrow with `instanceof` before accessing properties
+- Never swallow errors with empty catch blocks
+
+```typescript
+// ✅ Good
+try {
+  await riskyOperation();
+} catch (error) {
+  if (error instanceof NetworkError) {
+    throw new AppError(`Network failure: ${error.message}`);
+  }
+  throw error;
+}
+
+// ❌ Bad
+try {
+  await riskyOperation();
+} catch {}
+```
+
+## Boundaries
+
+### ✅ Always
+
+- Run `bun run check` before committing
+- Keep all types explicit — no `any`
+- Write tests for new functionality
+- Use `bun run` for all project commands
+
+### ⚠️ Ask Before
 
 - Adding or removing dependencies (`bun add` / `bun remove`)
 - Changing `tsconfig.json` settings
 - Modifying `.github/workflows/` CI configuration
 - Changing build output paths or structure
+
+### 🚫 Never
+
+- Commit `.env` files, tokens, or credentials
+- Use `require()` or CommonJS syntax
+- Use `npm`, `yarn`, or `pnpm` — only `bun`
+- Skip or bypass pre-commit hooks
