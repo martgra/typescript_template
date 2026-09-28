@@ -26,6 +26,7 @@ RUN curl -fsSL https://mise.run | sh
 
 # Activate mise for interactive zsh shells and configure history persistence
 RUN echo 'eval "$(mise activate zsh)"' >> /home/${USERNAME}/.zshrc \
+    && echo 'eval "$(mise activate bash)"' >> /home/${USERNAME}/.bashrc \
     && echo 'export HISTFILE=/home/vscode/commandhistory/.zsh_history' >> /home/${USERNAME}/.zshrc \
     && echo 'export HISTSIZE=10000' >> /home/${USERNAME}/.zshrc \
     && echo 'export SAVEHIST=10000' >> /home/${USERNAME}/.zshrc \
